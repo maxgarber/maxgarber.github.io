@@ -1,0 +1,30 @@
+/*	
+ *		WaterConditions
+ *		by Maxwell Garber <max.garber+dev@gmail.com>
+ *		version 0.0.3b (2017/04/13)
+ *		WaterConditions.css
+ */
+
+#textData {
+	font-family: Lucida;
+}
+
+.centering {
+	text-align: center;
+}
+.centered {
+	display: inline-block;
+}
+
+#container {
+
+}
+
+#graph {
+	
+}
+
+#graphCanvas {
+	width: 720px;
+	height: 300px;
+}
