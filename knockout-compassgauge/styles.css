@@ -1,0 +1,59 @@
+/*		Knockout CompassGauge: styles.css				*/
+/*		by Maxwell Garber <max.garber+dev@gmail.com>	*/
+/*		last revision 2017-05-03						*/
+
+.centering {
+	text-align: center;
+}
+.centered {
+	display: inline-block;
+}
+
+/**/
+
+.CG-container {
+	position: relative;
+	width: 250pt;
+	height: 250pt;
+	text-align: center;
+	border: 1px solid black;
+	font-family: Helvetica;
+	text-align: center;
+}
+
+.CG-number {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	width: inherit;
+	height: inherit;
+	vertical-align: middle;
+	border: 1px dashed red;
+	font-size: 150pt;
+}
+
+.CG-units {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	width: inherit;
+	height: inherit;
+	border: 1px dashed green;
+	vertical-align: -25%;
+	font-size: 50pt;
+	font-weight: lighter;
+}
+
+.CG-svg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	width: inherit;
+	height: inherit;
+	border: 1px dashed blue;
+}
+
+/* EOF */
