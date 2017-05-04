@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Knockout CompassGauge</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script src="../../libs/knockout-3.4.2.js"></script>
+	<script src="scripts.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div class="centering">
+			<div class="centered">
+				
+				<div class="CG-container" data-bind="style: {
+					'width': styleWidth, 'height': styleHeight, 'lineHeight': styleHeight
+				}">
+					<div class="CG-number" data-bind="text: number">No.</div>
+					<div class="CG-units" data-bind="text: units, style: {
+						'height': unitsHeight, 'font-size': unitsHeight, 'line-height': unitsHeight, 'top': unitsTop
+					}">units</div>
+					<svg class="CG-svg" data-bind="style: {
+						'width': styleWidth, 'height': styleHeight
+					}, attr: {
+						'viewBox': viewbox
+					}">
+						<circle data-bind="attr: {
+							'cx': circleX, 'cy': circleY, 'r': circleR,
+							'stroke': 'black', 'stroke-width': '2', 'fill':'rgba(0,0,0,0)'
+						}"/>
+					</svg>
+				</div>
+				
+				<!-- <div id="debugOutput" data-bind="text: styleWidth"></div> -->
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<!-- END -->
