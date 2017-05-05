@@ -17,9 +17,10 @@
 	height: 200pt;
 	line-height: 200pt;
 	text-align: center;
-	border: 1px solid black;
 	font-family: Helvetica;
 	text-align: center;
+	
+	border: 1px solid black;
 }
 
 .CG-number {
@@ -30,8 +31,9 @@
 	width: inherit;
 	height: inherit;
 	vertical-align: middle;
-	border: 1px dashed red;
 	font-size: 150pt;
+	
+	/*border: 1px dashed red;*/
 }
 
 .CG-units {
@@ -41,8 +43,9 @@
 	bottom: 0;
 	display: inline-block;
 	width: inherit;
-	border: 1px dashed green;
 	font-weight: lighter;
+	
+	/*border: 1px dashed green;*/
 }
 
 .CG-svg {
@@ -52,7 +55,8 @@
 	display: inline-block;
 	width: inherit;
 	height: inherit;
-	border: 1px dashed blue;
+	
+	/*border: 1px dashed blue;*/
 }
 
 /* EOF */

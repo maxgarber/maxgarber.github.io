@@ -22,16 +22,33 @@
 					<svg class="CG-svg" data-bind="style: {
 						'width': styleWidth, 'height': styleHeight
 					}, attr: {
-						'viewBox': viewbox
+						'viewPort': svgViewPort, 'viewBox': svgViewBox
 					}">
 						<circle data-bind="attr: {
 							'cx': circleX, 'cy': circleY, 'r': circleR,
 							'stroke': 'black', 'stroke-width': '2', 'fill':'rgba(0,0,0,0)'
 						}"/>
+						<polygon stroke="black" stroke-width="2" fill="blue" data-bind="attr: {
+							'points': polygonPoints
+						}, style: {
+							'transform': polygonTransform
+						}" />
 					</svg>
 				</div>
 				
 				<!-- <div id="debugOutput" data-bind="text: styleWidth"></div> -->
+				
+				<div id="controls" style="text-align: left; font-size: 16pt; line-height: 20pt;">
+					<div>Magnitude:
+						<input id="magnitude" type="range" min="0" max="999" step="9" data-bind="textInput: number" />
+					</div>
+					<div>Units:
+						<input id="unitsInput" type="text" maxlength="3" size="4" data-bind="textInput: units" />
+					</div>
+					<div>Direction:
+						<input id="direction" type="range" min="0" max="360" step="1" data-bind="textInput: theta" />
+					</div>
+				</div>
 				
 			</div>
 		</div>
