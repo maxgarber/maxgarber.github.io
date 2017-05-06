@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Knockout CompassGauge</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script src="../libs/knockout-3.4.2.js"></script>
+	<script src="scripts.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div class="centering">
+			<div class="centered">
+				
+				<div data-bind='component: {
+					name: "compass-gauge",
+					params: {
+						number: 88, units: "MPH",
+						width: "250", height: "250", dimUnit: "pt"
+					}
+				}'></div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<!-- END -->

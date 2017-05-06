@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Knockout CompassGauge</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script src="../../libs/knockout-3.4.2.js"></script>
+	<script src="scripts.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div class="centering">
+			<div class="centered">
+				
+				<div class="CG-container" data-bind="style: {
+					'width': styleWidth, 'height': styleHeight, 'lineHeight': styleHeight
+				}">
+					<div class="CG-number" data-bind="text: number">No.</div>
+					<div class="CG-units" data-bind="text: units, style: {
+						'height': unitsHeight, 'font-size': unitsHeight, 'line-height': unitsHeight, 'top': unitsTop
+					}">units</div>
+					<svg class="CG-svg" data-bind="style: {
+						'width': styleWidth, 'height': styleHeight
+					}, attr: {
+						'viewPort': svgViewPort, 'viewBox': svgViewBox
+					}">
+						<circle data-bind="attr: {
+							'cx': circleX, 'cy': circleY, 'r': circleR,
+							'stroke': 'black', 'stroke-width': '2', 'fill':'rgba(0,0,0,0)'
+						}"/>
+						<polygon stroke="black" stroke-width="2" data-bind="attr: {
+							'points': polygonPoints, 'fill': needleFill
+						}, style: {
+							'transform': polygonTransform
+						}" />
+					</svg>
+				</div>
+				
+				<!-- <div id="debugOutput" data-bind="text: styleWidth"></div> -->
+				
+				<div id="controls" style="text-align: left; font-size: 16pt; line-height: 20pt;">
+					<div>Magnitude:
+						<input id="magnitude" type="range" min="0" max="999" step="9" data-bind="textInput: number" />
+					</div>
+					<div>Units:
+						<input id="unitsInput" type="text" maxlength="6" size="6" data-bind="textInput: units" />
+					</div>
+					<div>Direction:
+						<input id="direction" type="range" min="0" max="360" step="1" data-bind="textInput: theta" />
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<!-- END -->
