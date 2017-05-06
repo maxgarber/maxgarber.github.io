@@ -28,8 +28,8 @@
 							'cx': circleX, 'cy': circleY, 'r': circleR,
 							'stroke': 'black', 'stroke-width': '2', 'fill':'rgba(0,0,0,0)'
 						}"/>
-						<polygon stroke="black" stroke-width="2" fill="blue" data-bind="attr: {
-							'points': polygonPoints
+						<polygon stroke="black" stroke-width="2" data-bind="attr: {
+							'points': polygonPoints, 'fill': needleFill
 						}, style: {
 							'transform': polygonTransform
 						}" />
@@ -43,7 +43,7 @@
 						<input id="magnitude" type="range" min="0" max="999" step="9" data-bind="textInput: number" />
 					</div>
 					<div>Units:
-						<input id="unitsInput" type="text" maxlength="3" size="4" data-bind="textInput: units" />
+						<input id="unitsInput" type="text" maxlength="6" size="6" data-bind="textInput: units" />
 					</div>
 					<div>Direction:
 						<input id="direction" type="range" min="0" max="360" step="1" data-bind="textInput: theta" />

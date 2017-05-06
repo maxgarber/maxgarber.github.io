@@ -9,6 +9,7 @@ window.onload = function () {
 		this.width = ko.observable(350);
 		this.height = ko.observable(350);
 		this.styleUnits = ko.observable('px');
+		this.needleFill = ko.observable('rgba(255,0,0,0.5)');
 		
 		//	Digits & Units
 		this.number = ko.observable(101);
@@ -52,9 +53,9 @@ window.onload = function () {
 		//	Compass Needle Polygon
 		this.polygonPoints = ko.computed(function() {
 			var p1 = this.width()/2 + ',' + 0.05*this.height()/2;
-			var p2 = 0.4*this.width() + ',' + 0.95*this.height();
+			var p2 = 0.4*this.width() + ',' + 0.96*this.height();
 			var p3 = this.width()/2 + ',' + 0.9*this.height();
-			var p4 = 0.6*this.width() + ',' + 0.95*this.height();
+			var p4 = 0.6*this.width() + ',' + 0.96*this.height();
 			return p1+' '+p2+' '+p3+' '+p4;
 		}, this);
 		this.polygonTransform = ko.computed(function() {
