@@ -30,6 +30,13 @@ var temperatureParameters = {
 	siteStatus: 'all'
 };
 
+var dataDownsampleFactor = 1;
+
+var plotColors = {
+	temperature: '#FF5050',
+	flow: '#3377FF',
+	flood: '#44EE44'
+}
 
 // Utilities
 var toFahrenheit = function (temp) {
@@ -38,6 +45,18 @@ var toFahrenheit = function (temp) {
 var toCelsius = function (temp) {
 	return ( (temp!=null) ? ((temp - 32) * (5/9)) : null );
 };
+var downsample = function(dataArray, rFactor) {
+	var downsampledArray = [];
+	//	work backward to preserve most recent datum
+	var i = dataArray.length - 1;
+	var j = Math.floor(dataArray.length/rFactor);
+	while (i >= 0) {
+		downsampledArray[j] = dataArray[i];
+		i -= rFactor;
+		j -= 1;
+	}
+	return downsampledArray;
+}
 
 // Formatters
 var tickFormatter = function (value, index, values, type) {	
@@ -47,8 +66,7 @@ var tickFormatter = function (value, index, values, type) {
 	}
 	if (type == "temp") {
 		return value.toString();
-	}
-	
+	}	
 }
 
 // Data palettes - populated by parser functions
@@ -102,7 +120,14 @@ var setupGraphStructures = function () {
 		id: "xAxis",
 		type: "time",		// can we pass the moment objects directly?
 		position: "bottom",
-		gridLines: { display: true },
+		gridLines: { 
+			display: true,
+			color: '#ffffff',
+			lineWidth: 0.5,
+			borderDash: [5,2],
+			zeroLineWidth: 1,
+			zeroLineColor: '#ffffff'
+		},
 		time:  {
 			unit: 'hour',
 			displayFormats: {
@@ -110,8 +135,7 @@ var setupGraphStructures = function () {
 				day: 'DD',
 				hour: 'ddd ha',
 				minute: 'mm'
-			},
-			unitStepSize: 12
+			}
 		}
 	};
 	yAxis_flow = {
@@ -119,7 +143,7 @@ var setupGraphStructures = function () {
 		type: "logarithmic",
 		position: "left",
 		display: true,
-		gridLines: { display: false },
+		gridLines: { display: true },
 		ticks: {
 			callback: function (label, index, labels) {
 				return label+"k";
@@ -130,7 +154,7 @@ var setupGraphStructures = function () {
 		scaleLabel: {
 			display: true,
 			labelString: "Flow Rate (cfs)",
-			fontColor: 'blue',
+			fontColor: plotColors.flow,
 			fontSize: 14
 		}
 	}
@@ -145,7 +169,7 @@ var setupGraphStructures = function () {
 		scaleLabel: {
 			display: true,
 			labelString: "Flood Stage (ft)",
-			fontColor: 'green',
+			fontColor: plotColors.flood,
 			fontSize: 14
 		}
 	};
@@ -165,7 +189,7 @@ var setupGraphStructures = function () {
 		scaleLabel: {
 			display: true,
 			labelString: "Water Temperature (˚C)",
-			fontColor: 'red',
+			fontColor: plotColors.temperature,
 			fontSize: 14
 		}
 	};
@@ -177,24 +201,24 @@ var setupGraphStructures = function () {
 	// dataset wrapping
 	flowDataset = {
 		label: "Flow (kcfs)",
-		borderColor: "blue",
-		backgroundColor: 'blue',
+		borderColor: plotColors.flow,
+		backgroundColor: plotColors.flow,
 		fill: false,
 		yAxisID: "yAxis_flow",
 		data: ordinates.observed.flow
 	};
 	floodDataset = {
 		label: "Flood Stage (ft)",
-		borderColor: "green",
-		backgroundColor: 'green',
+		borderColor: plotColors.flood,
+		backgroundColor: plotColors.flood,
 		fill: false,
 		yAxisID: "yAxis_flood",
 		data: ordinates.observed.flood
 	};
 	tempDataset = {
 		label: "Water Temperature (˚C)",
-		borderColor: "red",
-		backgroundColor: 'red',
+		borderColor: plotColors.temperature,
+		backgroundColor: plotColors.temperature,
 		fill: false,
 		yAxisID: "yAxis_temp",
 		data: ordinates.observed.temp
@@ -208,7 +232,10 @@ var setupGraphStructures = function () {
 	graphOptions = {
 		scales: graphScale,
 		legend: {
-			position: "bottom"
+			position: "bottom",
+			labels: {
+				fontColor: 'white'
+			}
 		},
 		hidden: false,
 		maintainAspectRatio: false
@@ -222,6 +249,10 @@ var setupGraphStructures = function () {
 };
 
 var renderGraph = function () {
+	Chart.defaults.global.defaultFontColor = 'white';
+	Chart.defaults.global.elements.point.radius = 1;
+	Chart.defaults.global.elements.line.borderWidth = 3;
+	Chart.defaults.global.elements.line.tension = 0.8;
 	theGraph = new Chart(graphCanvas, graphSettings);
 };
 
@@ -247,7 +278,7 @@ var parseFlowAndFloodData = function (data) {
 	var forecastData = $(data).find('site > forecast > datum');
 	var forecastDataN = forecastData.length;
 	
-	for(i=0; i<observedDataN; i++) {
+	for(i = 0; i < observedDataN; i += dataDownsampleFactor) {
 		var datum = $(observedData).get(i);
 		var datetime = $(datum).children('valid').text();
 		datetime = datetime.substr(0,16);
@@ -262,7 +293,7 @@ var parseFlowAndFloodData = function (data) {
 		ordinates.observed.flow[i] = Number.parseFloat(flow);
 	}
 	
-	for(i=0; i<forecastDataN; i++) {
+	for(i = 0; i < forecastDataN; i += dataDownsampleFactor) {
 		var datum = $(forecastData).get(i);
 		var datetime = $(datum).children('valid').text();
 		datetime = datetime.substr(0,16);
@@ -308,7 +339,7 @@ var parseTemperatureData = function (data) {
 	var observedData = $(data.documentElement).children('wml2\\:observationMember').find('wml2\\:point')
 	var observedDataN = observedData.length;
 	
-	for(i=0; i<observedDataN; i++) {
+	for(i = 0; i < observedDataN; i += dataDownsampleFactor) {
 		var datum = $(observedData).get(i);
 		var datetime = $(datum).find('wml2\\:time').text();
 		var temp = $(datum).find('wml2\\:value').text();

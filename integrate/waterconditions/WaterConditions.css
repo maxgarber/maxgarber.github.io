@@ -5,10 +5,25 @@
  *		WaterConditions.css
  */
 
-#textData {
-	font-family: Lucida;
+/*
+	Elements
+*/
+body {
+	background: red; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(black, #404040); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(black, #404040); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(black, #404040); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(black, #404040); /* Standard syntax */
+	width: 100%;
 }
 
+h1, h2 {
+	color: white;
+}
+
+/*
+	Classes
+*/
 .centering {
 	text-align: center;
 }
@@ -16,15 +31,41 @@
 	display: inline-block;
 }
 
-#container {
-
+span.label {
+	font-family: sans-serif;
+	font-weight: bold;
+	margin-right: 1em;
+	text-align: right;
+}
+span.value {
+	font-family: sans-serif;
+	text-align: left;
 }
 
-#graph {
-	
+/*
+	IDs
+*/
+#container {
+	width: 100%;
+	height: 100%;
+}
+
+#textData {
+	font-family: sans-serif;
+	color: white;
+	text-align: center;
+	border: 1px solid white;
+}
+
+#zoneData {
+	font-family: sans-serif;
+	color: white;
+	text-align: center;
+	border: 1px solid white;
 }
 
 #graphCanvas {
-	width: 720px;
-	height: 300px;
+	width: 65em;
+	height: 20em;
 }
+

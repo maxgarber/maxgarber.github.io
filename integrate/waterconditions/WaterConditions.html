@@ -10,32 +10,53 @@
 		<!-- styles -->
 		<link rel="stylesheet" type="text/css" href="WaterConditions.css">
 				
-		<!-- CDN scripts -->
+		<!-- scripts: CDN-hosted -->
+		<!--
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+		-->
+		
+		<!-- locall-hosted copies -->
+		<script src="./libs/jquery-3.2.1.min.js"></script>
+		<script src="./libs/moment-2.18.1.min.js"></script>
+		<!-- script src="./libs/underscore-1.8.3.min.js"></script -->
+		<script src="./libs/Chart-2.6.0.min.js"></script>
 
 		<!-- local scripts -->
 		<script src="./WaterConditions.js"></script>
 	</head>
 	<body>
-		<div id="textData">
-			<div>
-				Flow:&nbsp;<span id="flow"></span>
-			</div>
-			<div>
-				Temperature:&nbsp;<span id="temp"></span>
-			</div>
-			<div>
-				Flood Stage:&nbsp;<span id="flood"></span>
-			</div>
-			<div>
-				Wind:&nbsp;<span id="wind"></span>
-			</div>
-		</div>
-		<hr />
 		<div id="container" class="centering">
+			<h1>River Conditions</h1>
+			
+			<div id="textData">
+				<div class="dataLine">
+					<span class="label">Flow:</span>
+					<span class="value" id="flow"></span>
+				</div>
+				<div class="dataLine">
+					<span class="label">Temperature:</span>
+					<span class="value" id="temp"></span>
+				</div>
+				<div class="dataLine">
+					<span class="label">Flood Stage:</span>
+					<span class="value" id="flood"></span>
+				</div>
+				<div class="dataLine">
+					<span class="label">Wind:</span>
+					<span class="value" id="wind"></span>
+				</div>
+			</div>
+			
+			<div id="zoneData">
+				<div class="dataLine">
+					<span class="zoneLabel">Zone:</span><span class="zoneValue" id="zone"></span>
+				</div>
+				<p>Rules of the river for given zone...</p>
+			</div>
+			
 			<div id="graph" class="centered">
 				<canvas id="graphCanvas"></canvas>
 			</div>

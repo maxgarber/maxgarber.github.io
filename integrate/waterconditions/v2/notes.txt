@@ -1,0 +1,5 @@
+Notes:
+
+Manipulable values on page should be named:
+	dataField-<fieldName>
+	e.g. dataField-zone => zone value (1-6)
