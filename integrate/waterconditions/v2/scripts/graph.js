@@ -1,110 +1,18 @@
-/*
- *		WaterConditions
- *		by Maxwell Garber <max.garber+dev@gmail.com>
- *		version 0.0.3b (2017/04/13)
- *		WaterConditions.js
- */
+//	
+//		TRRA Dashboard
+//		by Maxwell Garber <max.garber+dev@gmail.com>
+//		graph.js
+//
 
-/*	Referenced Javascript Libraries		// TODO? use require.js
- *	jQuery
- *	moment
- *	underscore
- *	Chart.js
- *	...
- */
 
-// References
-let flowAndFloodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=shrp1&output=xml";
-let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
-
-let flowAndFloodParameters = {
-	gage: 'shrp1',
-	output: 'xml'
-};
-let temperatureParameters = {
-	format: 'waterml,2.0',
-	sites: '03049640',
-	startDT: '',		// literal example '2017-04-12T15:00-0000'
-	endDT: '',			// literal example '2017-04-14T01:30-0000'
-	parameterCd: '00010',
-	siteStatus: 'all'
-};
-
-let dataDownsampleFactor = 1;
-
-let plotColors = {
-	temperature: '#FF5050',
-	flow: '#3377FF',
-	flood: '#44EE44'
-};
-
-let selectors = {
-	graphCanvas: '#graphCanvas',
-	currentFlow: '#flow',
-	currentFlood: '#flood',
-	currentTemp: '#temp'
-}
-
-// Utilities
-var toFahrenheit = function (temp) {
-	return ( (temp!=null) ? ((temp * (9/5)) + 32) : null );
-};
-var toCelsius = function (temp) {
-	return ( (temp!=null) ? ((temp - 32) * (5/9)) : null );
-};
-var downsample = function(dataArray, rFactor) {
-	var downsampledArray = [];
-	//	work backward to preserve most recent datum
-	var i = dataArray.length - 1;
-	var j = Math.floor(dataArray.length/rFactor);
-	while (i >= 0) {
-		downsampledArray[j] = dataArray[i];
-		i -= rFactor;
-		j -= 1;
-	}
-	return downsampledArray;
-}
-
-// Formatters
-var tickFormatter = function (value, index, values, type) {	
-	if (type == "flow") {
-		console.log("got value: "+value);
-		return value.toString();
-	}
-	if (type == "temp") {
-		return value.toString();
-	}	
-}
-
-// Data palettes - populated by parser functions
-var abscissa = {
-	observed: [],
-	forecast: []
-};
-var moments = {
-	observed: [],
-	forecast: []
-};
+//	Global Variables
+var abscissa = { observed: [], forecast: [] };
+var moments = { observed: [], forecast: [] };
 var ordinates = {
-	observed: {
-		flow: [],
-		flood: [],
-		temp: []
-	},
-	forecast: {
-		flow: [],
-		flood: [],
-		temp: []
-	}
+	observed: { flow: [], flood: [], temp: [] },
+	forecast: { flow: [], flood: [], temp: [] }
 };
-var units = {
-	flow: 'kcfs',
-	flood: 'ft',
-	temp: '˚C'
-};
-
-
-// Graph Structures
+var units = { flow: 'kcfs', flood: 'ft', temp: '˚C' };
 var xAxis = {};
 var yAxis_flow = {};
 var yAxis_flood = {};
@@ -120,7 +28,21 @@ var graphCanvas = null;
 var graphSettings = {};
 var theGraph;
 
-// Graph Functions
+
+
+
+// Formatters
+var tickFormatter = function (value, index, values, type) {	
+	if (type == "flow") {
+		console.log("got value: "+value);
+		return value.toString();
+	}
+	if (type == "temp") {
+		return value.toString();
+	}	
+}
+
+//	Graph Functions
 var setupGraphStructures = function () {
 	// axes & scales
 	xAxis = {
@@ -247,7 +169,7 @@ var setupGraphStructures = function () {
 		hidden: false,
 		maintainAspectRatio: false
 	};
-	graphCanvas = $(selectors.graphCanvas).get(0);
+	graphCanvas = $(graphCanvasSelector).get(0);
 	graphSettings = {
 		type: "line",
 		data: graphData,
@@ -274,118 +196,61 @@ var parseFlowAndFloodData = function (data) {
 		flowRateMeasurement: $(latestObservedDatum).find('secondary').text(),
 		flowRateUnits: $(latestObservedDatum).find('secondary').attr('units')
 	};
-	
 	// update instantaneous values
 	$(selectors.currentFlow).text(latestObserved.flowRateMeasurement + " " + latestObserved.flowRateUnits);
 	$(selectors.currentFlood).text(latestObserved.floodStageMeasurement + " " + latestObserved.floodStageUnits);
-	
 	// get time-series and forecasted data
 	var observedData = $(data).find('site > observed > datum');
 	var observedDataN = observedData.length;
 	var forecastData = $(data).find('site > forecast > datum');
 	var forecastDataN = forecastData.length;
-	
 	for(i = 0; i < observedDataN; i += dataDownsampleFactor) {
 		var datum = $(observedData).get(i);
 		var datetime = $(datum).children('valid').text();
 		datetime = datetime.substr(0,16);
 		var flood = $(datum).children('primary').text();
 		var flow = $(datum).children('secondary').text();
-		
 		var aMoment = moment(datetime);
 		moments.observed[i] = aMoment;
-		
 		abscissa.observed[i] = datetime;
 		ordinates.observed.flood[i] = Number.parseFloat(flood);
 		ordinates.observed.flow[i] = Number.parseFloat(flow);
 	}
-	
 	for(i = 0; i < forecastDataN; i += dataDownsampleFactor) {
 		var datum = $(forecastData).get(i);
 		var datetime = $(datum).children('valid').text();
 		datetime = datetime.substr(0,16);
 		var flood = $(datum).children('primary').text();
 		var flow = $(datum).children('secondary').text();
-		
 		var aMoment = moment(datetime);
 		moments.forecast[i] = aMoment;
-		
 		abscissa.forecast[i] = datetime;
 		ordinates.forecast.flood[i] = Number.parseFloat(flood);
 		ordinates.forecast.flood[i] = Number.parseFloat(flow);
 	}
-	
 	var obsmin = moment.min(moments.observed);
 	var obsmax = moment.max(moments.observed);
-	//var formin = moment.min(moments.forecast);
-	//var formax = moment.max(moments.forecast);
-	
-	//var displayFormat = "YYYY-MM-DDTHH:mm-00:00";
 	var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
-	
-	//console.log("observed: "+obsmin.format(displayFormat)+" - "+obsmax.format(displayFormat));
-	//console.log("forecast: "+formin.format(displayFormat)+" - "+formax.format(displayFormat));
-	
 	temperatureParameters.startDT = obsmin.format(tempReqFormat);
 	temperatureParameters.endDT = obsmax.format(tempReqFormat);	
 };
 
 var parseTemperatureData = function (data) {
-	// grabs the most recent only for now
 	var tempC = $(data.documentElement).children().find('wml2\\:value:first').text();
 	var tempF = toFahrenheit(tempC);
-
 	var latestObserved = {
 		celsius: tempC,
 		fahrenheit: tempF
 	}
-	
 	$(selectors.currentTemp).text(tempC + " ˚C");
-	
 	// extract timeseries data
 	var observedData = $(data.documentElement).children('wml2\\:observationMember').find('wml2\\:point')
 	var observedDataN = observedData.length;
-	
 	for(i = 0; i < observedDataN; i += dataDownsampleFactor) {
 		var datum = $(observedData).get(i);
 		var datetime = $(datum).find('wml2\\:time').text();
 		var temp = $(datum).find('wml2\\:value').text();
-		
-		// datetime = datetime.substr(0,16);
-		// var aMoment = moment(datetime);
-		
 		ordinates.observed.temp[i] = Number.parseFloat(temp);
 	}
-	
 	renderGraph();
 };
-
-// TODO: Wind(!), Weather(?)
-
-
-// MAIN - initiate execution on window load event
-$( window ).on( "load", function() {	
-	setupGraphStructures();
-	
-	$.ajax({
-		url: flowAndFloodSourceURI,
-		data: flowAndFloodParameters,
-		datatype: 'xml',
-		success: function (data) {
-			parseFlowAndFloodData(data);
-			
-			// hard-chain start
-			$.ajax({
-				url: temperatureSourceURI,
-				data: temperatureParameters,
-				datatype: 'xml',
-				success: function (data) {
-					parseTemperatureData(data);
-				}
-			});
-			// hard-chain end
-			
-		}
-	});
-	// TODO: await success of calls & then render graph
-});

@@ -62,22 +62,17 @@ body {
 
 /*	Current Zone's Styles	*/
 #zone-data-container {
-	
-}
-
-#zone-value-div {
 	height: 26em;
-	line-height: 27.5em;
+	line-height: 26em;
 }
 
-#zone-value-div > span {
+#dataField-zone {
 	font-size: 16em;
 	font-weight: normal;
-	padding-bottom: 0.05em;
-	padding-left: 0.3em;
-	padding-right: 0.3em;
+	padding: 0 0.27em 0 0.27em;
 	background-color: #777777;
-	border-radius: 0.2em;
+	border-radius: 0.15em;
+	vertical-align: middle;
 }
 
 /*	Current Rules' Styles	*/
@@ -110,9 +105,30 @@ body {
 	
 }
 
+/*	Graph styles	*/
+#graph-data-container {
+	/*padding-left: 10em;
+	padding-righ: 10em;*/
+	padding-bottom: 5em;
+}
+#graphCanvas {
+	height: 30em;
+}
+
+
+/*	Display Customization	*/
+
+.label-zone-1 {
+	background-color: #107e02;
+}
+
+#bottom-gutter {
+	height: 5em;
+}
+
 /*	Debugging Styles	*/
 .dashedBorder {
-	/*border: 1px dashed white;*/
+	border: 1px dashed white;
 }
 
 /* EOF */

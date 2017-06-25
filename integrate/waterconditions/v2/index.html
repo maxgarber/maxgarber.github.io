@@ -27,10 +27,18 @@
 		<script src="./libs/moment-2.18.1.min.js"></script>
 		<script src="./libs/Chart-2.6.0.min.js"></script>
 		
+		
+		<script src="./libs/require-2.3.3.js"></script>
+		
 		<!-- Custom Styles -->
 		<link rel="stylesheet" type="text/css" href="styles.css">
 		<!-- Custom Scripts -->
-		<script src="main.js"></script>
+		
+		<script src="./scripts/omnibus.js"></script>
+		<!-- <script src="./scripts/constants.js"></script>
+		<script src="./scripts/graph.js"></script>
+
+		<script src="./scripts/main.js"></script> -->
 	</head>
 	<body>
 		<div id="container-outer">
@@ -39,15 +47,15 @@
 					<div class="row">
 						
 						<!-- BEGIN Current Values Table -->
-						<div class="col-lg-4 col-md-8 col-sm-12 col-xs-12 text-center dashedBorder">
+						<div class="col-lg-4 col-md-8 col-sm-12 col-xs-12 text-center">
 							<h2 class="colTitle">Now</h2>
-							<div id="now-data-container" class="container-fluid dashedBorder">
-								<div class="row now-value-row dashedBorder">
+							<div id="now-data-container" class="container-fluid">
+								<div class="row now-value-row">
 									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
 										<span>Flow</span>
 									</div>
 									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
-										<span class="label label-default">24.2 kcfs</span>
+										<span class="label label-default" id="dataField-flow"></span>
 									</div>
 								</div>
 								
@@ -56,7 +64,7 @@
 										<span>Temp</span>
 									</div>
 									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
-										<span class="label label-default">22.0 ˚C</span>
+										<span class="label label-default" id="dataField-temp"></span>
 									</div>
 								</div>
 								
@@ -65,7 +73,7 @@
 										<span>Flood</span>
 									</div>
 									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
-										<span class="label label-default">8 ft</span>
+										<span class="label label-default" id="dataField-flood"></span>
 									</div>
 								</div>
 								
@@ -74,7 +82,7 @@
 										<span>Air</span>
 									</div>
 									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
-										<span class="label label-default">27.0 ˚C</span>
+										<span class="label label-default" id="dataField-air"></span>
 									</div>
 								</div>
 								
@@ -83,8 +91,8 @@
 										<span>Wind</span>
 									</div>
 									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
-										<span class="label label-default">0.5 mph</span>
-										<span>SW</span>
+										<span class="label label-default" id="dataField-windSpeed"></span>
+										<span id="dataField-windDirxn"></span>
 									</div>
 								</div>
 							</div>
@@ -94,53 +102,65 @@
 						<!-- BEGIN Current Zone Display -->
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-center">
 							<h2 class="colTitle">Zone</h2>
-							<div id="zone-value-div" id="zone-data-container">
-								<span id="dataField-zone">1</span>
+							<div id="zone-data-container">
+								<span class="label label-default" id="dataField-zone"></span>
 							</div>
 						</div>
 						<!-- END Current Zone Display -->
 						
 						<!-- BEGIN Safety Values Table -->
-						<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 text-center dashedBorder">
+						<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 text-center">
 							<h2 class="colTitle">Safety Rules</h2>
-							<div class="container-fluid" id="rules-data-container dashedBorder">
+							<div class="container-fluid" id="rules-data-container">
 								<div class="row rules-value-row">
-									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name dashedBorder">
+									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-default">Boats</span>
 									</div>
-									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value dashedBorder">
-										<span>All</span>
+									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+										<span id="dataField-boats"></span>
 									</div>
 								</div>
 								<div class="row rules-value-row">
-									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name dashedBorder">
+									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-default">Coaches</span>
 									</div>
-									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value dashedBorder">
-										<span>Not a requirement</span>
+									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+										<span id="dataField-coaches"></span>
 									</div>
 								</div>
 								<div class="row rules-value-row">
-									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name dashedBorder">
+									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-default">Equipment</span>
 									</div>
-									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value dashedBorder">
-										<span>PFD optional, protected cellphone recommended</span>
+									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+										<span id="dataField-equipment"></span>
 									</div>
 								</div>
 								<div class="row rules-value-row">
-									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name dashedBorder">
+									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-default">Skill</span>
 									</div>
-									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value dashedBorder">
-										<span>Any level</span>
+									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+										<span id="dataField-skill"></span>
 									</div>
 								</div>
 								<div class="row rules-value-row">&nbsp;</div>
 							</div>
 						</div>
-						<!-- BEGIN Safety Values Table -->
+						<!-- END Safety Values Table -->
 					</div>
+					<div class="row center-block">
+						<!-- BEGIN Recent Values -->
+						<!-- col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 -->
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+							<h2 class="colTitle">Recent</h2>
+							<div class="graph-data-container">
+								<canvas id="graphCanvas"></canvas>
+							</div>
+						</div>
+						<!-- END Recent Values -->
+					</div>
+					<div id="bottom-gutter">&nbsp;</div>
 				</div>
 			</div>
 		</div>
