@@ -90,8 +90,10 @@ var org_openweathermap = {
 			datatype: 'json',
 			crossDomain: true,
 			headers: {
-				'Access-Control-Allow-Origin': '*',
-				'Origin': 'https://maxgarber.github.io'
+				'Access-Control-Allow-Origin': 'https://maxgarber.github.io',
+				'Access-Control-Allow-Methods': 'GET',
+				'Origin': 'https://maxgarber.github.io',
+				'Referer': 'https://maxgarber.github.io/projects/web/riverstatus/index.html'
 			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.main.temp;
@@ -121,8 +123,10 @@ var org_openweathermap = {
 			datatype: 'json',
 			crossDomain: true,
 			headers: {
-				'Access-Control-Allow-Origin': '*',
-				'Origin': 'https://maxgarber.github.io'
+				'Access-Control-Allow-Origin': 'https://maxgarber.github.io',
+				'Access-Control-Allow-Methods': 'GET',
+				'Origin': 'https://maxgarber.github.io',
+				'Referer': 'https://maxgarber.github.io/projects/web/riverstatus/index.html'
 			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.wind.speed;
@@ -152,8 +156,10 @@ var org_openweathermap = {
 			datatype: 'json',
 			crossDomain: true,
 			headers: {
-				'Access-Control-Allow-Origin': '*',
-				'Origin': 'https://maxgarber.github.io'
+				'Access-Control-Allow-Origin': 'https://maxgarber.github.io',
+				'Access-Control-Allow-Methods': 'GET',
+				'Origin': 'https://maxgarber.github.io',
+				'Referer': 'https://maxgarber.github.io/projects/web/riverstatus/index.html'
 			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.wind.deg;
