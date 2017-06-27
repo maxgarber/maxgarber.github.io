@@ -84,17 +84,10 @@ var org_openweathermap = {
 		
 		let asyncContext = this;
 		
-		$.get({
+		$.ajax({
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: 'json',
-			crossDomain: true,
-			headers: {
-				'Access-Control-Allow-Origin': 'https://maxgarber.github.io',
-				'Access-Control-Allow-Methods': 'GET',
-				'Origin': 'https://maxgarber.github.io',
-				'Referer': 'https://maxgarber.github.io/projects/web/riverstatus/index.html'
-			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.main.temp;
 				apiData = asyncContext.airTempFormatter(apiData);
@@ -117,17 +110,10 @@ var org_openweathermap = {
 		
 		let asyncContext = this;
 		
-		$.get({
+		$.ajax({
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: 'json',
-			crossDomain: true,
-			headers: {
-				'Access-Control-Allow-Origin': 'https://maxgarber.github.io',
-				'Access-Control-Allow-Methods': 'GET',
-				'Origin': 'https://maxgarber.github.io',
-				'Referer': 'https://maxgarber.github.io/projects/web/riverstatus/index.html'
-			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.wind.speed;
 				apiData = asyncContext.airSpeedFormatter(apiData);
@@ -150,17 +136,10 @@ var org_openweathermap = {
 		
 		let asyncContext = this;
 		
-		$.get({
+		$.ajax({
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: 'json',
-			crossDomain: true,
-			headers: {
-				'Access-Control-Allow-Origin': 'https://maxgarber.github.io',
-				'Access-Control-Allow-Methods': 'GET',
-				'Origin': 'https://maxgarber.github.io',
-				'Referer': 'https://maxgarber.github.io/projects/web/riverstatus/index.html'
-			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.wind.deg;
 				apiData = asyncContext.airDirxnFormatter(apiData);

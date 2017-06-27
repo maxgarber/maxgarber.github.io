@@ -47,7 +47,6 @@ var gov_weather = {
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: asyncContext.api.params.format,
-			crossDomain: true,
 			success: function (data, textStatus, jqXHR) {
 				
 				// get from data -- XPaths?
@@ -84,7 +83,6 @@ var gov_weather = {
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: asyncContext.api.params.format,
-			crossDomain: true,
 			success: function (data, textStatus, jqXHR) {
 				
 				// get from data
