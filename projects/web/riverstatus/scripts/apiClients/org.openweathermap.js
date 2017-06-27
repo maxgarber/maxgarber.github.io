@@ -88,6 +88,7 @@ var org_openweathermap = {
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: 'json',
+			crossDomain: true,
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.main.temp;
 				apiData = asyncContext.airTempFormatter(apiData);
@@ -114,6 +115,7 @@ var org_openweathermap = {
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: 'json',
+			crossDomain: true,
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.wind.speed;
 				apiData = asyncContext.airSpeedFormatter(apiData);
@@ -140,6 +142,7 @@ var org_openweathermap = {
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: 'json',
+			crossDomain: true,
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.wind.deg;
 				apiData = asyncContext.airDirxnFormatter(apiData);

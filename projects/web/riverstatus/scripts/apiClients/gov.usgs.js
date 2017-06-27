@@ -51,6 +51,7 @@ var gov_usgs = {
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: asyncContext.api.params.format,
+			crossDomain: true,
 			success: function (data, textStatus, jqXHR) {
 				var value = data.value.timeSeries[0].values[0].value[0].value;
 				value = asyncContext.valueFormatter(value);

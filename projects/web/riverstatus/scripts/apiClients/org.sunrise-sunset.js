@@ -51,6 +51,7 @@ var org_sunrise_sunset = {
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: 'json',
+			crossDomain: true,
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.results.sunrise;
 				apiData = asyncContext.timeFormatter(apiData);
@@ -77,6 +78,7 @@ var org_sunrise_sunset = {
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: 'json',
+			crossDomain: true,
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.results.sunset;
 				apiData = asyncContext.timeFormatter(apiData);
