@@ -13,7 +13,7 @@ var org_openweathermap = {
 	},
 	
 	api: {
-		url: 'https://api.openweathermap.org/data/2.5/weather',
+		url: 'http://api.openweathermap.org/data/2.5/weather',
 		params: {
 			q: 'Pittsburgh',
 			APPID: 'ca57135ce92d724c88f387883163f1ad'	// My API Key
@@ -89,6 +89,9 @@ var org_openweathermap = {
 			data: asyncContext.api.params, 
 			datatype: 'json',
 			crossDomain: true,
+			headers: {
+				'Access-Control-Allow-Origin': '*'
+			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.main.temp;
 				apiData = asyncContext.airTempFormatter(apiData);
@@ -116,6 +119,9 @@ var org_openweathermap = {
 			data: asyncContext.api.params, 
 			datatype: 'json',
 			crossDomain: true,
+			headers: {
+				'Access-Control-Allow-Origin': '*'
+			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.wind.speed;
 				apiData = asyncContext.airSpeedFormatter(apiData);
@@ -143,6 +149,9 @@ var org_openweathermap = {
 			data: asyncContext.api.params, 
 			datatype: 'json',
 			crossDomain: true,
+			headers: {
+				'Access-Control-Allow-Origin': '*'
+			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.wind.deg;
 				apiData = asyncContext.airDirxnFormatter(apiData);
