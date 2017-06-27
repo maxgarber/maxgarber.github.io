@@ -84,7 +84,7 @@ var org_openweathermap = {
 		
 		let asyncContext = this;
 		
-		$.ajax({
+		$.get({
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: 'json',
@@ -114,7 +114,7 @@ var org_openweathermap = {
 		
 		let asyncContext = this;
 		
-		$.ajax({
+		$.get({
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: 'json',
@@ -144,7 +144,7 @@ var org_openweathermap = {
 		
 		let asyncContext = this;
 		
-		$.ajax({
+		$.get({
 			url: asyncContext.api.url, 
 			data: asyncContext.api.params, 
 			datatype: 'json',
