@@ -90,7 +90,8 @@ var org_openweathermap = {
 			datatype: 'json',
 			crossDomain: true,
 			headers: {
-				'Access-Control-Allow-Origin': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Origin': 'https://maxgarber.github.io'
 			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.main.temp;
@@ -120,7 +121,8 @@ var org_openweathermap = {
 			datatype: 'json',
 			crossDomain: true,
 			headers: {
-				'Access-Control-Allow-Origin': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Origin': 'https://maxgarber.github.io'
 			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.wind.speed;
@@ -150,7 +152,8 @@ var org_openweathermap = {
 			datatype: 'json',
 			crossDomain: true,
 			headers: {
-				'Access-Control-Allow-Origin': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Origin': 'https://maxgarber.github.io'
 			},
 			success: function (data, textStatus, jqXHR) {
 				var apiData = data.wind.deg;
