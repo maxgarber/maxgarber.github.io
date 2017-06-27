@@ -13,7 +13,7 @@ var org_openweathermap = {
 	},
 	
 	api: {
-		url: 'http://api.openweathermap.org/data/2.5/weather',
+		url: 'https://api.openweathermap.org/data/2.5/weather',
 		params: {
 			q: 'Pittsburgh',
 			APPID: 'ca57135ce92d724c88f387883163f1ad'	// My API Key
