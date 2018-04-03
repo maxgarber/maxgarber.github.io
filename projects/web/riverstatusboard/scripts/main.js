@@ -11,6 +11,17 @@ let main = function () {
 	var bindingContext = document.getElementById('koBindingContext');
 	ko.applyBindings(viewModel, bindingContext);
 	window.vm = viewModel;
+	
+	setupGraphStructures();
+	populateDataSets();
+	renderGraph();
+	
+	// ugly click-to-fahrenheit hack
+	var isWaterTempInCelsius = true;
+	var waterTempInCelsiusCached = viewModel.waterTemp()
+	$('dataField-temp').click(function () {
+		// toggle celsius/fahrenheit
+	});
 };
 
 //	call main once page has loaded

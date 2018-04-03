@@ -3,7 +3,7 @@
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		apiConcierge.js created on 2017-06-26
 
-/*
+
 var usingMockData = false;
 
 var mockData = {
@@ -23,7 +23,7 @@ var apiClients = {
 	'openweather.org': org_openweathermap,
 	'sunrise-sunset.org': org_sunrise_sunset
 };
-
+/*
 var getWaterFlow = function (setterFunc) {
 	if (usingMockData) { return mockData.waterFlow; }
 	return apiClients['weather.gov'].getWaterFlow(setterFunc);

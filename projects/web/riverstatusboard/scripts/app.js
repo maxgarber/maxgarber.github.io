@@ -5,6 +5,9 @@
 
 
 var AppViewModel = function () {
+	
+	this.devMode = ko.observable(true);
+	
 	// static, private
 	this._initString = ' ';
 	
@@ -104,6 +107,46 @@ var AppViewModel = function () {
 		return color;
 	}, this);
 	
+	this.shellTypes = ko.computed(function () {
+		let zone = this.zone();
+		let shells = trra_safety.rowing.matrix.shellType[zone];
+		return shells;
+	}, this);
+	
+	this.launchRatio = ko.computed(function () {
+		let zone = this.zone();
+		let launchRatio = trra_safety.rowing.matrix.launchToShellRatio[zone];
+		return launchRatio;
+	}, this);
+	
+	this.coachCert = ko.computed(function () {
+		let zone = this.zone();
+		let coaches = trra_safety.rowing.matrix.coachCertification[zone];
+		return coaches;
+	}, this);
+	
+	this.pfdReq = ko.computed(function () {
+		let zone = this.zone();
+		let pfdR = trra_safety.rowing.matrix.pfdRequirement[zone];
+		return pfdR;
+	}, this);
+	
+	this.commsEquip = ko.computed(function () {
+		let zone = this.zone();
+		let comms = trra_safety.rowing.matrix.commRequirement[zone];
+		return comms;
+	}, this);
+	
+	this.crewSkill = ko.computed(function () {
+		let zone = this.zone();
+		return trra_safety.rowing.matrix.crewSkillLevel[zone];
+	}, this);
+	
+	this.additionalSafety = ko.computed(function () {
+		let zone = this.zone();
+		return trra_safety.rowing.matrix.additionalSafetyItems[zone];
+	}, this);
+	
 	// methods, public
 	this.update = function () {
 		
@@ -114,6 +157,7 @@ var AppViewModel = function () {
 		apiConcierge.getValueAsync('waterFlow', this.waterFlow);
 		apiConcierge.getValueAsync('waterLevel', this.waterLevel);
 		apiConcierge.getValueAsync('waterTemp', this.waterTemp);
+		// intervene for unit switching
 		
 		//	Air temp & wind are disabled b/c OpenWeatherMap doesn't support HTTPS and I don't know
 		//	  …how to modify the content security policy to allow mixed resource use

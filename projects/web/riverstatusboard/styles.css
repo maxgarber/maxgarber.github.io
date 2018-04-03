@@ -112,7 +112,7 @@ body {
 }
 
 .rules-value-value > span {
-	
+	color: white;
 }
 
 /*	Graph styles	*/
@@ -120,7 +120,7 @@ body {
 	padding-bottom: 5em;
 }
 #graphCanvas {
-	height: 30em;
+	height: 15em;
 }
 #graphRow {
 	padding-top: 2em;

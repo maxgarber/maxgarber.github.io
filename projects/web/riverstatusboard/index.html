@@ -29,6 +29,8 @@
 		<script src="./scripts/libs/moment-2.18.1.min.js"></script>
 		<!-- Knockout -->
 		<script src="./scripts/libs/knockout-3.4.2.js"></script>
+		<!-- Chart -->
+		<script src="./scripts/libs/Chart-2.6.0.min.js"></script>
 		
 		<!-- custom API management scheme -->
 		<script src="./scripts/apiClients/gov.weather.js"></script>
@@ -43,6 +45,7 @@
 		<!-- the app itself -->
 		<script src="./scripts/app.js"></script>
 		<script src="./scripts/main.js"></script>
+		<script src="./scripts/graph.js"></script>
 		
 		<!-- Custom Styles -->
 		<link rel="stylesheet" type="text/css" href="./styles.css">
@@ -59,7 +62,17 @@
 		<div id="container-outer">
 			<div id="container-inner">
 				<div class="container-fluid center-block">
+					
+					<!-- BEGIN development mode header row -->
+					<div class="row" data-bind="visible:devMode">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
+							<span class="label label-default">Testing controls for development will appear here</span>
+						</div>
+					</div>
+					<!-- END development mode header row -->
+					
 					<center><h1 class="h1-custom">Allegheny River Conditions</h1></center>
+					
 					<div class="row">
 					
 						<!-- BEGIN Current Values Table -->
@@ -173,10 +186,26 @@
 							<div class="container-fluid" id="rules-data-container">
 								<div class="row rules-value-row">
 									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
-										<span class="label label-default">Boats</span>
+										<span class="label label-default">Shell Types</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-boats"></span>
+										<span id="dataField-shells" data-bind="text:shellTypes"></span>
+									</div>
+								</div>
+								<div class="row rules-value-row">
+									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
+										<span class="label label-default">Skill Level</span>
+									</div>
+									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+										<span id="dataField-skill"  data-bind="text:crewSkill"></span>
+									</div>
+								</div>
+								<div class="row rules-value-row">
+									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
+										<span class="label label-default">Launches</span>
+									</div>
+									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+										<span id="dataField-launches" data-bind="text:launchRatio"></span>
 									</div>
 								</div>
 								<div class="row rules-value-row">
@@ -184,23 +213,17 @@
 										<span class="label label-default">Coaches</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-coaches"></span>
+										<span id="dataField-coaches" data-bind="text:coachCert"></span>
 									</div>
 								</div>
 								<div class="row rules-value-row">
 									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
-										<span class="label label-default">Equipment</span>
+										<span class="label label-default">Safety Gear</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-equipment"></span>
-									</div>
-								</div>
-								<div class="row rules-value-row">
-									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
-										<span class="label label-default">Skill</span>
-									</div>
-									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-skill"></span>
+										<span id="dataField-pdfReq" data-bind="text:pfdReq"></span><br />
+										<span id="dataField-commsEquip"  data-bind="text:commsEquip"></span><br />
+										<span id="dataField-skill"  data-bind="text:additionalSafety"></span>
 									</div>
 								</div>
 								<div class="row rules-value-row">&nbsp;</div>
@@ -209,16 +232,14 @@
 						<!-- END Safety Values Table -->
 					</div>
 					<div class="row center-block">
-						<!-- 
-						BEGIN Recent Values 
+						<!-- BEGIN Recent Values -->
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" id="graphRow">
-							<h2 class="colTitle">Recent</h2>
+							<h2 class="colTitle">Recent Conditions</h2>
 							<div class="graph-data-container">
 								<canvas id="graphCanvas"></canvas>
 							</div>
 						</div>
-						END Recent Values
-						-->
+						<!-- END Recent Values -->
 					</div>
 					<div id="bottom-gutter">&nbsp;</div>
 				</div>
