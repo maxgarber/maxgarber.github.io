@@ -5,6 +5,10 @@
 
 //	make requirejs calls here
 
+
+//	dev/debug stuff here
+let devMode = false;
+
 //	main block - declare before executing
 let main = function () {
 	var viewModel = new AppViewModel();
@@ -12,16 +16,11 @@ let main = function () {
 	ko.applyBindings(viewModel, bindingContext);
 	window.vm = viewModel;
 	
-	setupGraphStructures();
-	populateDataSets();
-	renderGraph();
-	
-	// ugly click-to-fahrenheit hack
-	var isWaterTempInCelsius = true;
-	var waterTempInCelsiusCached = viewModel.waterTemp()
-	$('dataField-temp').click(function () {
-		// toggle celsius/fahrenheit
-	});
+	if (viewModel.graphEnabled()) {
+		setupGraphStructures();
+		populateDataSets();
+		renderGraph();
+	}
 };
 
 //	call main once page has loaded

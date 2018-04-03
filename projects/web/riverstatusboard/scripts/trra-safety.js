@@ -8,7 +8,7 @@
 
 //	rank returns the zone for a value, given a scale
 // TODO: add parameters for L/R inclusivity -- and/or make interval dependent
-var rank = function (value, scale) {
+let rank = function (value, scale) {
 	var r = 0;	// initialize at invalid/below all zones
 	for (z = 1; z <= scale.zoneCount; z++) {
 		if ( value >= scale[z].min && value <= scale[z].max ) {
@@ -24,11 +24,11 @@ var rank = function (value, scale) {
 };
 
 //	determines if it is currently daylight
-var daylight = function (sunrise, sunset) {
+let daylight = function (sunrise, sunset) {
 	// check if sunruse, sunset are moment objects?
 };
 
-var semanticColors = {
+let semanticColors = {
 	
 	1: '#00c020',		//	green
 	2: '#40fe00',		//	bright green
